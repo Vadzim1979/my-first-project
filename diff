@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Простой ToDo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 400px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+    }
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    li {
+      background: #f0f0f0;
+      margin-bottom: 5px;
+      padding: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    button {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      padding: 4px 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>ToDo список</h1>
+  <input type="text" id="todo-input" placeholder="Добавить задачу..." />
+  <ul id="todo-list"></ul>
+
+  <script>
+    const input = document.getElementById('todo-input');
+    const list = document.getElementById('todo-list');
+
+    input.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter' && input.value.trim() !== '') {
+        addTodo(input.value.trim());
+        input.value = '';
+      }
+    });
+
+    function addTodo(text) {
+      const li = document.createElement('li');
+      li.textContent = text;
+
+      const btn = document.createElement('button');
+      btn.textContent = 'Удалить';
+      btn.addEventListener('click', () => li.remove());
+
+      li.appendChild(btn);
+      list.appendChild(li);
+    }
+  </script>
+</body>
+</html>
+    
