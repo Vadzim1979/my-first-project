@@ -2,8 +2,8 @@ name: Daily Commit
 
 on:
   schedule:
-    - cron: "0 7 * * *"  # Каждый день в 07:00 UTC
-  workflow_dispatch:     # Позволяет запуск вручную из GitHub Actions
+    - cron: "0 7 * * *"        # Каждый день в 07:00 UTC
+  workflow_dispatch:           # Позволяет запускать вручную
 
 jobs:
   commit:
@@ -12,6 +12,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Ensure dummy.js exists
+        run: |
+          mkdir -p $(dirname dummy.js)
+          touch dummy.js
 
       - name: Update dummy.js
         run: |
@@ -22,5 +29,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add dummy.js
-          git commit -m "🤖 Авто-коммит: $(date -u)" || echo "Нечего коммитить"
+          git commit -m "🤖 Ежедневный коммит: $(date -u)" || echo "Нечего коммитить"
           git push
