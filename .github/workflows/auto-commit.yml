@@ -1,0 +1,26 @@
+name: Daily Commit
+
+on:
+  schedule:
+    - cron: "0 7 * * *"  # Каждый день в 07:00 UTC
+  workflow_dispatch:     # Позволяет запуск вручную из GitHub Actions
+
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Update dummy.js
+        run: |
+          echo "// Авто-коммит от $(date -u)" >> dummy.js
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dummy.js
+          git commit -m "🤖 Авто-коммит: $(date -u)" || echo "Нечего коммитить"
+          git push
