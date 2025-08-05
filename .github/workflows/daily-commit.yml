@@ -3,7 +3,10 @@ name: Daily Commit
 on:
   schedule:
     - cron: "0 7 * * *"        # Каждый день в 07:00 UTC
-  workflow_dispatch:           # Позволяет запускать вручную
+  workflow_dispatch:           # Позволяет запуск вручную
+
+permissions:
+  contents: write              # ✅ Разрешение на push
 
 jobs:
   commit:
